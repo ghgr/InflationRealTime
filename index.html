@@ -61,7 +61,7 @@ In 10 years, you will need to have <a id="eq_final_10_year_money"></a> in your a
     {
 	    var x = document.getElementById("frm1");
 
-	    data0 = new Date(2014,0,1,0,0,0,0);
+	    data0 = new Date(new Date().getFullYear(),0,1,0,0,0,0);
 	    data1 = new Date();
 	    current_time = data1-data0; //ms
 	    initial_money=parseFloat(x[0].value);
