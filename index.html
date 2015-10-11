@@ -7,8 +7,8 @@
 
 
 <form id="frm1" action="form_action.asp">
-Cash stashed as of January 1, 2014: <input type="text" name="w0" value="20000"> EUR/USD/Whatever<br>
-Inflation rate: <input type="text" name="infl" value="0.02"><br><br>
+Cash stashed as of January 1: <input type="text" name="w0" value="20000" size="4"> EUR/USD/Whatever<br>
+Inflation rate (in percentage): <input type="text" name="infl" value="2.00" size="3">%<br><br>
 </form> 
 
 
@@ -17,6 +17,7 @@ Inflation rate: <input type="text" name="infl" value="0.02"><br><br>
 <br/>
 
 <div id="infoblock" style="position:absolute;left:100;top:100">
+With an inflation of <a id="inflation_pct"></a>%...<br/><br/>
 Your initial wealth is now equivalent to <a id="money"></a> (value on January 1st).<br/>
 That means that you need <a id="eq_money"></a> (at today's value) in order to keep your original purchasing power.<br/>
 That means that you essentially lost <a id="lost_money"></a> (at today's value) to inflation. <br/>
@@ -30,9 +31,6 @@ Now, assuming constant inflation during the following 10 years...
 In 10 years, your wealth will be worth <a id="final_10_year_money"></a> (using the value at January 1st this year).<br/>
 In 10 years, you will need to have <a id="eq_final_10_year_money"></a> in your account in order to keep the purchasing power you had on January 1st this year.<br/>
 <br/>
-<form action="http://www.mrmoneymustache.com/">
-    <input type="submit" value="Please make it stop!">
-</form>
 <br/>
 You can fork this project on <a href="https://github.com/ghgr/InflationRealTime">Github</a>
 </div>
@@ -46,16 +44,13 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 
     function bleed()
     {
+	synchronizator();
 	current_money+=money_per_millisecond*10;
 	eq_current_money+=eq_money_per_millisecond*10;
 
         document.getElementById("money").innerHTML = numberWithCommas(current_money.toFixed(6));
 	document.getElementById("lost_money").innerHTML = numberWithCommas((eq_current_money-initial_money).toFixed(6));
 	document.getElementById("eq_money").innerHTML = numberWithCommas(eq_current_money.toFixed(6));
-	document.getElementById("final_money").innerHTML = numberWithCommas(final_money.toFixed(2));
-	document.getElementById("eq_final_money").innerHTML = numberWithCommas(eq_final_money.toFixed(2));
-        document.getElementById("final_10_year_money").innerHTML = numberWithCommas(final_10_year_money.toFixed(2));	
-	document.getElementById("eq_final_10_year_money").innerHTML = numberWithCommas(eq_final_10_year_money.toFixed(2));
     }
 
 
@@ -67,7 +62,8 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 	    data1 = new Date();
 	    current_time = data1-data0; //ms
 	    initial_money=parseFloat(x[0].value);
-	    inflation=parseFloat(x[1].value); 
+	    inflation_pct = parseFloat(x[1].value)
+	    inflation=inflation_pct*0.01; 
 	    final_money = initial_money/(1.0+inflation); // final money at 31-DEC ( 37 OCT :-) )
 	    final_10_year_money = initial_money/Math.pow((1.0+inflation),10);
 	    eq_final_money = initial_money*(1.0+inflation); // money you need to have to keep your purchasing power
@@ -80,11 +76,17 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 	    eq_current_money = initial_money + eq_money_per_millisecond*current_time;
 
 	    var fastcounter=setInterval(function(){bleed()},10);
-	    var sync = setInterval(function(){synchronizator()},10000);
 
 
 
     	    document.getElementById("infoblock").style.display = 'block';
+
+		// Constant values
+	    document.getElementById("final_money").innerHTML = numberWithCommas(final_money.toFixed(2));
+	    document.getElementById("eq_final_money").innerHTML = numberWithCommas(eq_final_money.toFixed(2));
+	    document.getElementById("final_10_year_money").innerHTML = numberWithCommas(final_10_year_money.toFixed(2));	
+	    document.getElementById("eq_final_10_year_money").innerHTML = numberWithCommas(eq_final_10_year_money.toFixed(2));
+	    document.getElementById("inflation_pct").innerHTML = numberWithCommas(inflation_pct.toFixed(2));
 
 
 
@@ -110,4 +112,3 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 
 </body>
 </html>
-
