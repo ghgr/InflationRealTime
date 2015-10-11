@@ -46,7 +46,6 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 
     function bleed()
     {
-	synchronizator();
 	current_money+=money_per_millisecond*10;
 	eq_current_money+=eq_money_per_millisecond*10;
 
@@ -81,6 +80,7 @@ You can fork this project on <a href="https://github.com/ghgr/InflationRealTime"
 	    eq_current_money = initial_money + eq_money_per_millisecond*current_time;
 
 	    var fastcounter=setInterval(function(){bleed()},10);
+	    var sync = setInterval(function(){synchronizator()},10000);
 
 
 
