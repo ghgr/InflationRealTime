@@ -1,39 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> The cost of inaction </title>
+    <title>The Cost of Inaction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #infoblock {
+            display: none;
+            margin-top: 20px;
+        }
+        .result {
+            margin-bottom: 10px;
+        }
+        .result span {
+            font-weight: bold;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <h1>The Cost of Inaction</h1>
 
-<form id="frm1" action="form_action.asp">
-Cash stashed as of January 1: <input type="text" name="w0" value="20000" size="4"> EUR/USD/Whatever<br>
-Inflation rate (in percentage): <input type="text" name="infl" value="2.00" size="3">%<br><br>
-</form> 
+    <form id="frm1">
+        <label for="w0">Cash stashed as of January 1:</label>
+        <input type="text" id="w0" name="w0" value="20000">
 
+        <label for="infl">Inflation rate (in percentage):</label>
+        <input type="text" id="infl" name="infl" value="2.00">
+    </form>
 
-<button onclick="startTheBleed()">Start</button>
-<br/>
-<br/>
+    <button onclick="startTheBleed()">Start</button>
 
-<div id="infoblock" style="position:absolute;left:100;top:100">
-With an inflation of <a id="inflation_pct"></a>%...<br/><br/>
-Your initial wealth is now equivalent to <a id="money"></a> (value on January 1st).<br/>
-That means that you need <a id="eq_money"></a> (at today's value) in order to keep your original purchasing power.<br/>
-That means that you essentially lost <a id="lost_money"></a> (at today's value) to inflation. <br/>
-If you do nothing, at the end of the year your wealth will be worth <a id="final_money"></a> (at January 1st value). <br/>
-At the end of the year, you will need to have <a id="eq_final_money"></a> in your account in order to keep the purchasing power you had on January 1st.<br/>
-<br/>
-<br/>
-Now, assuming constant inflation during the following 10 years...
-<br/>
-<br/>
-In 10 years, your wealth will be worth <a id="final_10_year_money"></a> (using the value at January 1st this year).<br/>
-In 10 years, you will need to have <a id="eq_final_10_year_money"></a> in your account in order to keep the purchasing power you had on January 1st this year.<br/>
-<br/>
-<br/>
-You can fork this project on <a href="https://github.com/ghgr/InflationRealTime">Github</a>
+    <div id="infoblock">
+
+        <div class="result">With an inflation of <span id="inflation_pct"></span>%...</div>
+		<br/>
+        <div class="result">Your initial wealth is now equivalent to <span id="money"></span> (value on January 1st).</div>
+        <div class="result">That means that you need <span id="eq_money"></span> (at today's value) in order to keep your original purchasing power.</div>
+        <div class="result">That means that you essentially lost <span id="lost_money"></span> (at today's value) to inflation.</div>
+        <div class="result">If you do nothing, at the end of the year your wealth will be worth <span id="final_money"></span> (at January 1st value).</div>
+        <div class="result">At the end of the year, you will need to have <span id="eq_final_money"></span> in your account in order to keep the purchasing power you had on January 1st.</div>
+		<br/>
+        <div class="result"><br/>Now, assuming constant inflation during the following 10 years...</div>
+		<br/>
+
+        <div class="result">In 10 years, your wealth will be worth <span id="final_10_year_money"></span> (using the value at January 1st this year).</div>
+        <div class="result">In 10 years, you will need to have <span id="eq_final_10_year_money"></span> in your account in order to keep the purchasing power you had on January 1st this year.</div>
+        <div class="result">
+            You can fork this project on <a href="https://github.com/ghgr/InflationRealTime">Github</a>
+        </div>
+    </div>
 </div>
+
 
 <script>
 
